@@ -24,7 +24,7 @@ export type Project = {
 };
 
 export async function fetchProjects(): Promise<Project[]> {
-  const res = await http.get<Project[]>('/projects');
-  return res.data;
+  const res = await http.get<any>('/projects');
+  return Array.isArray(res.data) ? res.data : res.data?.data ?? [];
 }
 

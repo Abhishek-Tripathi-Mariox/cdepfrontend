@@ -1,9 +1,12 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
-// Axios instance targeting the deployed backend
+const rawBaseUrl = import.meta.env.VITE_API_BASE_URL ?? '';
+const baseURL = rawBaseUrl ? rawBaseUrl.replace(/\/+$/, '') : '/api';
+
+// Axios instance targeting the configured backend
 export const http = axios.create({
-  baseURL: 'http://13.51.47.105:4000/api',
+  baseURL,
   withCredentials: true
 });
 

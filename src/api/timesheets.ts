@@ -32,8 +32,8 @@ export type ProjectRisk = {
 };
 
 export async function fetchMyTimesheets(): Promise<Timesheet[]> {
-  const res = await http.get<Timesheet[]>('/timesheets');
-  return res.data;
+  const res = await http.get<any>('/timesheets');
+  return Array.isArray(res.data) ? res.data : res.data?.data ?? [];
 }
 
 export async function createTimesheet(payload: {
@@ -45,12 +45,13 @@ export async function createTimesheet(payload: {
   description: string;
   blockers?: string;
 }): Promise<Timesheet> {
-  const res = await http.post<Timesheet>('/timesheets', payload);
-  return res.data;
+  const res = await http.post<any>('/timesheets', payload);
+  const data = res.data;
+  return (data && typeof data === 'object' && '_id' in data) ? data : data?.data ?? {};
 }
 
 export async function fetchProjectRisks(): Promise<ProjectRisk[]> {
-  const res = await http.get<ProjectRisk[]>('/timesheets/risk/projects');
-  return res.data;
+  const res = await http.get<any>('/timesheets/risk/projects');
+  return Array.isArray(res.data) ? res.data : res.data?.data ?? [];
 }
 

@@ -18,7 +18,7 @@ export type Allocation = {
 };
 
 export async function fetchAllocations(): Promise<Allocation[]> {
-  const res = await http.get<Allocation[]>('/allocations');
-  return res.data;
+  const res = await http.get<any>('/allocations');
+  return Array.isArray(res.data) ? res.data : res.data?.data ?? [];
 }
 
